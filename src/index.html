@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+	<title>Gerador de Senhas</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="O Gerador de Senhas cria senhas totalmente aleatórias e seguras. Crie sua senha segura agora mesmo.">
+	<meta name="author" content="Carlos Machado">
+	<meta name="keywords" content="gerar, gerador, senha, senhas, seguro, segura, senha segura, gerar senha, gerar senha online, gerador de senhas, senha aleatória">
+
+	<link rel="shortcut icon" href="fav/favicon.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body class="bg-dark" onload="init();">
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+			<div class="container">
+				<a class="navbar-brand" href="#">Gerador de Senhas</a>
+				<span class="navbar-text">
+					Crie senhas seguras.
+				</span>
+			</div>
+		</nav>
+	</header>
+
+	<section class="page-section">
+		<div class="container">
+			<div class="row">
+				<div class="col bg-light px-5 py-5 rounded">
+					<form>
+						<div class="form-group">
+							<label for="password-length">Tamanho da Senha</label>
+							<select class="form-control" name="password-length" id="password-length" title="Selecione o tamanho da sua senha.">
+								<optgroup id="weak" label="Fraca">
+									<!-- 4 to 15 -->
+								</optgroup>
+								<optgroup id="strong" label="Forte">
+									<!-- 16 to 128 -->
+								</optgroup>
+								<optgroup id="super" label="Super">
+									<option value="256">256</option>
+									<option value="512">512</option>
+									<option value="1024">1024</option>
+									<option value="2048">2048</option>
+								</optgroup>
+							</select>
+						</div>
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" name="lowercase" id="lowercase">
+							<label class="form-check-label" for="lowercase">Incluir Caracteres Minúsculos ( ex. a b c d e f g h )</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" name="uppercase" id="uppercase">
+							<label class="form-check-label" for="uppercase">Incluir Caracteres Maiúsculos ( ex. A B C D E F G H )</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" name="numbers" id="numbers">
+							<label class="form-check-label" for="numbers">Incluir Números ( ex. 1 2 3 4 5 6 )</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" name="symbols" id="symbols">
+							<label class="form-check-label" for="symbols">Incluir Símbolos ( ex. @ # $ % )</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" name="no-similar" id="no-similar">
+							<label class="form-check-label" for="no-similar">Excluir caracteres Similares ( ex. i l 1 L o 0 O )</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input" name="no-ambiguous" id="no-ambiguous">
+							<label class="form-check-label" for="no-ambiguous">Excluir Caracteres Ambíguos ( ex. { } [ ] ( ) / \ ' " ` ~ , ; : . <> )</label>
+						</div>
+						<div class="form-group mt-5">
+							<label for="final-password">Sua nova senha</label>
+							<input type="text" class="form-control" name="final-password" id="final-password" aria-describedby="final-password" placeholder="Sua nova senha vai aparecer aqui.">
+							<small id="final-password" class="form-text text-muted">Não guardamos sua senha.</small>
+						</div>
+						<button type="button" class="btn btn-secondary btn-block mt-5" onclick="generate();">Gerar Senha</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="footer bg-light mt-5">
+		<div class="container text-center py-2">
+			<span class="text-muted">Copyright &copy; 2020. Todos os direitos reservados.</span>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		function init() {
+			// inicializar opções
+			for (var i = 4; i <= 128; i++) {
+				var c = document.createElement("option");
+				c.value = i;
+				c.appendChild(document.createTextNode(i.toString()));
+				if(i < 16){
+					document.getElementById("weak").appendChild(c);
+				}else{
+					document.getElementById("strong").appendChild(c);
+				}
+			}
+			
+			document.getElementById("password-length").value = 16;
+			document.getElementById("lowercase").checked = true;
+			document.getElementById("uppercase").checked = true;
+			document.getElementById("numbers").checked = true;
+			document.getElementById("symbols").checked = true;
+			document.getElementById("no-similar").checked = true;
+			document.getElementById("no-ambiguous").checked = true;
+		}
+
+		function generate() {
+			var lowercase = document.getElementById("lowercase").checked;
+			var uppercase = document.getElementById("uppercase").checked;
+			var number = document.getElementById("numbers").checked;
+			var symbol = document.getElementById("symbols").checked;
+
+			if (!lowercase && !uppercase && !number && !symbol) {
+				window.alert("Você precisa selecionar pelo menos um tipo de caractere.");
+				return;
+			}
+
+			var passwordLength = document.getElementById("password-length").value;
+
+			var noSimilar = document.getElementById("no-similar").checked;
+			var noAmb = document.getElementById("no-ambiguous").checked;
+
+			var lowerChar = "abcdefghjkmnpqrstuvwxyz";
+			var upperChar = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+			var numChar = "23456789";
+			var symChar = "!#$%&*+-=?@^_";
+			var allChars = "";
+			var allCharsLength;
+			var password = "";
+
+			if (!noSimilar) {
+				noSimilar += "ilo";
+				upperChar += "IO";
+				numChar += "01";
+				symChar += "|";
+			}
+			if (!noAmb) {
+				symChar += "{}[]()\/'\"`~,;:.<>\\";
+			}
+			if (lowercase) allChars += lowerChar;
+			if (uppercase) allChars += upperChar;
+			if (number) allChars += numChar;
+			if (symbol) allChars += symChar;
+
+			allCharsLength = allChars.length;
+
+			for (var i = 0; i < passwordLength; i++) {
+				var pos = Math.floor(Math.random() * allCharsLength);
+				password += allChars.substring(pos, pos + 1);
+			}
+
+			document.getElementById("final-password").value = password;
+		}
+	</script>
+</html>
