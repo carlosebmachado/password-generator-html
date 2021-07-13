@@ -74,8 +74,11 @@
 						</div>
 						<div class="form-group mt-5">
 							<label for="final-password">Your new password</label>
-							<input type="text" class="form-control" name="final-password" id="final-password" aria-describedby="final-password" placeholder="Your new password will appear here...">
-							<small id="final-password" class="form-text text-muted">We don't store your password.</small>
+              <div class="row">
+                <input type="text" class="col-sm-9 mb-2 form-control" name="final-password" id="final-password" aria-describedby="final-password" placeholder="Your new password will appear here...">
+                <button type="button" class="col-sm mb-2 ml-sm-2 btn btn-primary" onclick="copy();">Copy</button>
+              </div>
+              <small id="final-password" class="form-text text-muted">We don't store your password.</small>
 						</div>
 						<button type="button" class="btn btn-secondary btn-block mt-5" onclick="generate();">Generate Password</button>
 					</form>
